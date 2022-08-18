@@ -12,9 +12,10 @@ jobs:
       - name: 'get cache key'
         id: cache_key
         shell: bash
-        run: 'echo ::set-output name=key::$(git rev-list -1 HEAD -- package-lock.json)'
+        run: 'echo ::set-output name=key::$(sha1sum package-lock.json | cut -d\  -f1)'
 
-      - uses: actions/cache@v3
+      - name: 'cache node_modules'
+        uses: actions/cache@v3
         with:
           path: 'node_modules'
           key: ${{ steps.cache_key.outputs.key }}
