@@ -19,7 +19,7 @@ jobs:
           bash << 'EOF'
           #!/bin/bash
           set -e; set -o pipefail;
-          printf '::set-output name=key::%s' $(sha1sum ${{github.workspace}}/package-lock.json | cut -d\  -f1)
+          printf '::set-output name=key::%s' $(git rev-list -n1 HEAD -- ${{github.workspace}}/package-lock.json)
           EOF
 
       - name: 'cache node_modules'
