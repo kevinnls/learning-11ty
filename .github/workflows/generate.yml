@@ -12,7 +12,13 @@ jobs:
       - name: 'get cache key'
         id: cache_key
         shell: bash
-        run: 'echo ::set-output name=key::$(sha1sum ${{github.workspace}}/package-lock.json | cut -d\  -f1)'
+        run: |
+          bash << 'EOF'
+          ls ${{github.workspace}}
+          lockfile_hash=$(sha1sum ${{github.workspace}}/package-lock.json | cut -d\  -f1)
+          [[ -n ${lockfile_hash} ]] && exit 1
+          printf '::set-output name=key::%s' ${lockfile_hash}
+          EOF
 
       - name: 'cache node_modules'
         uses: actions/cache@v3
