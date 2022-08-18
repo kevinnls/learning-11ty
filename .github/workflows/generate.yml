@@ -17,10 +17,9 @@ jobs:
         shell: bash
         run: |
           bash << 'EOF'
-          ls ${{github.workspace}}
-          lockfile_hash=$(sha1sum ${{github.workspace}}/package-lock.json | cut -d\  -f1)
-          [[ -n ${lockfile_hash} ]] && exit 1
-          printf '::set-output name=key::%s' ${lockfile_hash}
+          #!/bin/bash
+          set -e; set -o pipefail;
+          printf '::set-output name=key::%s' $(sha1sum ${{github.workspace}}/package-lock.json | cut -d\  -f1)
           EOF
 
       - name: 'cache node_modules'
