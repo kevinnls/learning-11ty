@@ -1,0 +1,31 @@
+name: Generate static content using 11ty
+on: push
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 'setup Node'
+        uses: actions/setup-node@v3
+        with:
+          node-version: current
+          cache: 'npm'
+
+      - name: 'get cache key'
+        id: cache_key
+        shell: bash
+        run: 'echo ::set-output name=key::$(git rev-list -1 HEAD -- package-lock.json)'
+
+      - uses: actions/cache@v3
+        with:
+          path: 'node_modules'
+          key: ${{ steps.cache_key.outputs.key }}
+
+      - name: 'install dependencies'
+        run: npm install
+
+      - name: 'generate content'
+        run: npm ci
+
+      - name: 'upload artificat'
+        if: github.ref_name == 'main'
+        uses: actions/upload-pages-artifact@v1
