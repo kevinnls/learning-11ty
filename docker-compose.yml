@@ -1,0 +1,14 @@
+services:
+  server:
+    image: kevinnls/node-unprivileged:alpine
+    volumes:
+      - ./:/app
+      - node_modules:/app/node_modules
+    user: node
+    working_dir: /app
+    ports:
+      - ${PORT:-8080}:8080
+    command: npx @11ty/eleventy --serve
+
+volumes:
+  node_modules:
