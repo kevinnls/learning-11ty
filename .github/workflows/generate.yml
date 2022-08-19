@@ -26,10 +26,10 @@ jobs:
           restore-keys: npm-cache-
 
       - name: 'install dependencies'
-        run: npm install
-
-      - name: 'generate content'
         run: npm ci
+
+      - name: 'build'
+        run: npm run build
 
       - name: 'upload artificat'
         if: github.ref_name == 'main'
