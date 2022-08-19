@@ -1,4 +1,4 @@
-name: Generate static content using 11ty
+name: generate and deploy static content using 11ty
 on:
   - push
   - workflow_dispatch
@@ -32,5 +32,12 @@ jobs:
         run: npm run build
 
       - name: 'upload artificat'
-        if: github.ref_name == 'main'
         uses: actions/upload-pages-artifact@v1
+
+  deploy:
+    needs: generate
+    if: github.ref_name == 'main'
+    steps:
+      - name: 'deploy to GitHub Pages'
+        uses: actions/upload-pages-artifact@v1
+
