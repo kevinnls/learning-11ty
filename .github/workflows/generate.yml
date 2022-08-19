@@ -16,7 +16,7 @@ jobs:
 
       - name: 'get npm cache dir'
         id: cache-dir
-        run: 'printf ::set-output name=path::%s' $(npm config get cache)
+        run: printf '::set-output name=path::%s' $(npm config get cache)
 
       - name: 'get cached node_modules'
         uses: actions/cache@v3
