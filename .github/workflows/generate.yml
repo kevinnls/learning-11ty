@@ -15,12 +15,10 @@ jobs:
       - name: 'get cache key'
         id: cache_key
         shell: bash
-        run: |
-          bash << 'EOF'
-          #!/bin/bash
-          set -e; set -o pipefail;
-          printf '::set-output name=key::%s' $(git rev-list -n1 HEAD -- ${{github.workspace}}/package-lock.json)
-          EOF
+        run: >
+          printf '::set-output name=key::%s'
+          $(git rev-list -n1 HEAD --
+          ${{github.workspace}}/package-lock.json)
 
       - name: 'cache node_modules'
         uses: actions/cache@v3
