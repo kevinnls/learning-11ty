@@ -36,6 +36,7 @@ jobs:
 
   deploy:
     needs: generate
+    runs-on: ubuntu-latest
     if: github.ref_name == 'main'
     steps:
       - name: 'deploy to GitHub Pages'
