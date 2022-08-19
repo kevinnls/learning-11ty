@@ -40,5 +40,5 @@ jobs:
     if: github.ref_name == 'main'
     steps:
       - name: 'deploy to GitHub Pages'
-        uses: actions/deploy-pages@v3
+        uses: actions/deploy-pages@v1
 
