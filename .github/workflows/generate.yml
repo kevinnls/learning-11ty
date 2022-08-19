@@ -14,20 +14,19 @@ jobs:
         with:
           node-version: current
 
+      - name: 'get npm cache dir'
+        id: cache-dir
+        run: 'printf ::set-output name=path::%s' $(npm config get cache)
+
       - name: 'get cached node_modules'
         uses: actions/cache@v3
         with:
-          path: 'node_modules'
-          key: ${{ hashFiles('package-lock.json') }}
+          path: ${{ steps.cache-dir.outputs.path }}
+          key: npm-cache-${{ hashFiles('package-lock.json') }}
+          restore-keys: npm-cache-
 
       - name: 'install dependencies'
         run: npm install
-
-      - name: 'cache node_modules'
-        uses: actions/cache@v3
-        with:
-          path: 'node_modules'
-          key: ${{ hashFiles('package-lock.json') }}
 
       - name: 'generate content'
         run: npm ci
