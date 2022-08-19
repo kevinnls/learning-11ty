@@ -14,7 +14,7 @@ jobs:
         with:
           node-version: current
 
-      - name: 'cache node_modules'
+      - name: 'get cached node_modules'
         uses: actions/cache@v3
         with:
           path: 'node_modules'
@@ -22,6 +22,12 @@ jobs:
 
       - name: 'install dependencies'
         run: npm install
+
+      - name: 'cache node_modules'
+        uses: actions/cache@v3
+        with:
+          path: 'node_modules'
+          key: ${{ hashFiles('package-lock.json') }}
 
       - name: 'generate content'
         run: npm ci
