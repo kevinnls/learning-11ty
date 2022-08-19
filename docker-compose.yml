@@ -8,7 +8,7 @@ services:
     working_dir: /app
     ports:
       - ${PORT:-8080}:8080
-    command: npm run build
+    command: npm run dev
 
 volumes:
   node_modules:
