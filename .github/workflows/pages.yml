@@ -38,7 +38,7 @@ jobs:
     needs: generate
     runs-on: ubuntu-latest
     if: github.ref_name == 'main'
-    permission:
+    permissions:
       pages: write
       id-token: write
     environment:
