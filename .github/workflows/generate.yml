@@ -12,18 +12,11 @@ jobs:
         with:
           node-version: current
 
-      - name: 'get cache key'
-        id: cache_key
-        shell: bash
-        run: >
-          printf '::set-output name=key::%s'
-          $(git rev-list -n1 HEAD -- package-lock.json)
-
       - name: 'cache node_modules'
         uses: actions/cache@v3
         with:
           path: 'node_modules'
-          key: ${{ steps.cache_key.outputs.key }}
+          key: ${{ hashFiles(package-lock.json) }}
 
       - name: 'install dependencies'
         run: npm install
