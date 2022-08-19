@@ -38,7 +38,14 @@ jobs:
     needs: generate
     runs-on: ubuntu-latest
     if: github.ref_name == 'main'
+    permission:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
     steps:
       - name: 'deploy to GitHub Pages'
+        id: deploy
         uses: actions/deploy-pages@v1
 
