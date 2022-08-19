@@ -1,5 +1,7 @@
 name: Generate static content using 11ty
-on: push
+on:
+  - push
+  - workflow_dispatch
 jobs:
   generate:
     runs-on: ubuntu-latest
